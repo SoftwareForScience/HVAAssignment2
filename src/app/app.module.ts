@@ -8,6 +8,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsComponent } from './charts/charts.component';
 import { LognumberVisuComponent } from './visual_components/lognumber-visu/lognumber-visu.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LognumberVisuComponent } from './visual_components/lognumber-visu/lognu
     ErrorsDetectorsChartComponent,
     DashboardComponent,
     ChartsComponent,
-    LognumberVisuComponent
+    LognumberVisuComponent,
+    SidebarComponent
   ],
   imports: [
     ChartsModule,
