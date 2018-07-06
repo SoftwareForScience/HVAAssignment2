@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 
 export class ErrorsDetectorsChartComponent {
 
-  chart = []; // This will hold our chart info
+  chart = [];
 
   constructor(private _APIFetch: APIFetchService) {}
 
