@@ -3,15 +3,22 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-  <a href="#">Home</a>
-  <a href="#">Graph 1</a>
-  <a href="#">Graph 2</a>
-  <a href="#">Graph 3</a>
-</div>
-<span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; open</span>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+          <a [routerLink]="['/dashboard']">Home</a>
+          <a [routerLink]="['/charts']">Graph 1</a>
+          <a href="#">Graph 2</a>
+          <a href="#">Graph 3</a>
+        </div>
+        <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+    <a class="navbar-brand" [routerLink]="['/dashboard']">Dashboard</a>
+    <span id="darkModeIcon" style="font-size:30px;cursor:pointer" >&#9789;</span>
+  </nav>
+
+
 </body>
 </html> 
