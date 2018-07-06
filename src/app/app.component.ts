@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DarkModeHandlerService } from './dark-mode-handler.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  isDarkActivated : boolean;
+
+  constructor(private darkModeService : DarkModeHandlerService){
+    darkModeService.subject.subscribe(value => {
+      this.isDarkActivated = value;
+    }) ;
+  }
 }
+
+

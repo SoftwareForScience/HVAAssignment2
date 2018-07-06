@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DarkModeHandlerService } from '../dark-mode-handler.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  isDarkActivated : boolean = true;
+  constructor(private darkModeService : DarkModeHandlerService) { }
 
   ngOnInit() {
   }
@@ -18,6 +20,11 @@ export class SidebarComponent implements OnInit {
 
  closeNav() {
     document.getElementById("mySidenav").style.width = "0";
+}
+
+changeColor(){
+  this.isDarkActivated = !this.isDarkActivated;
+  this.darkModeService.setDarkMode(this.isDarkActivated);
 }
 
 }
