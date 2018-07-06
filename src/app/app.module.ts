@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
+import { APIFetchService } from './apifetch.service';
 
 import { AppComponent } from './app.component';
 import { ErrorsDetectorsChartComponent } from './charts_components/errors-detectors-chart/errors-detectors-chart.component';
@@ -22,9 +24,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     ChartsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [APIFetchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

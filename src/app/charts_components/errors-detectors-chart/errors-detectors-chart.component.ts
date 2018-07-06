@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { APIFetchService } from 'src/app/apifetch.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-errors-detectors-chart',
@@ -7,24 +9,53 @@ import { Component } from '@angular/core';
 
 export class ErrorsDetectorsChartComponent {
 
-  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLabels:string[] = ['ITS', 'TPC', 'TRD', 'TOF', 'T0', 'V0'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
- 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55], label: 'Number of errors'}
-  ];
- 
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
+  chart = []; // This will hold our chart info
+
+  constructor(private _APIFetch: APIFetchService) {}
+
+  ngOnInit() {
+    this._APIFetch.dailyForecast()
+      .subscribe(res => {
+        let temp_max = res['list'].map(res => res.main.temp_max);
+        let temp_min = res['list'].map(res => res.main.temp_min);
+        let alldates = res['list'].map(res => res.dt)
+
+        let weatherDates = []
+        alldates.forEach((res) => {
+          let jsdate = new Date(res * 1000)
+          weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }))
+        })
+        this.chart = new Chart('canvas', {
+          type: 'line',
+          data: {
+            labels: weatherDates,
+            datasets: [
+              { 
+                data: temp_max,
+                borderColor: "#3cba9f",
+                fill: false
+              },
+              { 
+                data: temp_min,
+                borderColor: "#ffcc00",
+                fill: false
+              },
+            ]
+          },
+          options: {
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true
+              }],
+              yAxes: [{
+                display: true
+              }],
+            }
+          }
+        });
+      })
   }
 }

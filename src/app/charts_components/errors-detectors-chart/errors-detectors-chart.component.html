@@ -1,11 +1,5 @@
 <div class="errors_detectors_container">
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)">
-      </canvas>
+      <div *ngIf="chart">
+            <canvas id="canvas">{{ chart }}</canvas>
+      </div>
 </div>
