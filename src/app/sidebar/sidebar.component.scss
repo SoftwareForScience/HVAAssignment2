@@ -1,3 +1,5 @@
+$backgroundcolor: white;
+
 body {
     font-family: "Lato", sans-serif;
 }
@@ -13,13 +15,21 @@ body {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
 }
 
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: $backgroundcolor;
     display: block;
     transition: 0.3s;
 }
@@ -28,13 +38,6 @@ body {
     color: #f1f1f1;
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
 
 #darkModeIcon{
     position: absolute;
