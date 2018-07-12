@@ -1,61 +1,117 @@
 import { Component } from '@angular/core';
 import { APIFetchService } from 'src/app/apifetch.service';
 import { Chart } from 'chart.js';
+import { InterfaceAPI } from "src/app/interface-api";
+import { error } from 'util';
+import { ValueTransformer } from '../../../../node_modules/@angular/compiler/src/util';
 
 @Component({
   selector: 'app-errors-detectors-chart',
-  templateUrl: './errors-detectors-chart.component.html'
+  templateUrl: './errors-detectors-chart.component.html',
+  providers:[APIFetchService]
 })
 
 export class ErrorsDetectorsChartComponent {
 
+  _postsArray: InterfaceAPI[];
+  subsystemArray = [];
+  countsSubsystem = [];
+  compressedsubsytemArray = [];
   chart = [];
 
   constructor(private _APIFetch: APIFetchService) {}
 
-  ngOnInit() {
-    this._APIFetch.dailyForecast()
-      .subscribe(res => {
-        let temp_max = res['list'].map(res => res.main.temp_max);
-        let temp_min = res['list'].map(res => res.main.temp_min);
-        let alldates = res['list'].map(res => res.dt)
+  getPosts(): void {
+    var i;
+    this._APIFetch.getPosts().
+    subscribe(
+      resultArray =>{ this._postsArray = resultArray;
+      console.dir(resultArray);
+      for(i=0;i<resultArray.length;i++){    //Fetching subsystems in an array
+        this.subsystemArray.push(resultArray[i].subsystem);
+      }
+      //Counting logs by subsystem and remove doubles
+      let copy = this.subsystemArray.slice(0);
+      // first loop goes over every element
+	    for (var i = 0; i < this.subsystemArray.length; i++) {
+        let Count = 0;
+        // loop over every element in the copy and see if it's the same
+		    for (var w = 0; w < copy.length; w++) {
+			    if (this.subsystemArray[i] == copy[w]) {
+				  // increase amount of times duplicate is found
+				  Count++;
+				  // sets item to undefined
+				  delete copy[w];
+			    }
+        }
+        if (Count > 0) {
+          let a = {value:"", count:0};
+          a.value = this.subsystemArray[i];
+          a.count = Count;
+          this.compressedsubsytemArray.push(a);
+        }
+      }
+      for(i=0; i < this.compressedsubsytemArray.length;i++)
+      {
+        if(this.compressedsubsytemArray[i].value == null ){
+          delete this.compressedsubsytemArray[i];
+        }
+      }
+      console.log(this.compressedsubsytemArray);
+      this.subsystemArray=[];
+      this.countsSubsystem=[];
 
-        let weatherDates = []
-        alldates.forEach((res) => {
-          let jsdate = new Date(res * 1000)
-          weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }))
-        })
-        this.chart = new Chart('canvas', {
-          type: 'line',
-          data: {
-            labels: weatherDates,
-            datasets: [
-              { 
-                data: temp_max,
-                borderColor: "#3cba9f",
-                fill: false
-              },
-              { 
-                data: temp_min,
-                borderColor: "#ffcc00",
-                fill: false
-              },
-            ]
-          },
-          options: {
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [{
-                display: true
-              }],
-              yAxes: [{
-                display: true
-              }],
+      for(i=0;i<this.compressedsubsytemArray.length;i++){
+        this.subsystemArray.push(this.compressedsubsytemArray[i].value);
+      }
+      for(i=0;i<this.compressedsubsytemArray.length;i++){
+        this.countsSubsystem.push(this.compressedsubsytemArray[i].count);
+      }
+      console.log(this.subsystemArray);
+      console.log(this.countsSubsystem);
+
+      //Charting
+      this.chart = new Chart('canvas', {
+        type: 'bar',
+        data: {
+          labels: this.subsystemArray,
+          datasets: [
+            { 
+              label: "Number of log",
+              data: this.countsSubsystem,
+              borderColor: "#D46A6A",
+              backgroundColor: "#D46A6A" ,
+              fill: true
             }
+          ]
+        },
+        options: {
+          responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Number of logs by detector chart'
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
           }
-        });
-      })
+        }
+      });
+      }
+       ,
+      error => console.log("Error :: " + error )
+      )
   }
+
+  ngOnInit(): void{
+    this.getPosts();
+  }
+  
 }

@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
+import {Http,Response} from "@angular/http";
+import { Observable } from "rxjs/Observable";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/Rx";
+import {InterfaceAPI} from "./interface-api";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class APIFetchService {
 
-  constructor(private _http: HttpClient) { }
+  private postsURL ="http://100.72.40.171:8081/api/all/entries";
 
-  dailyForecast() {
-    return this._http.get("http://samples.openweathermap.org/data/2.5/history/city?q=Warren,OH&appid=b6907d289e10d714a6e88b30761fae22")
-      .map(result => result);
-  }
+  constructor(private http: Http ) {}
+  getPosts(): Observable<InterfaceAPI[]>{
+      return this.http
+      .get(this.postsURL)
+      .map((response: Response)=> {
+        return <InterfaceAPI[]>response.json();
+      })
+      .catch(this.handleError);
+      
+ }
+
+ private handleError(error: Response) {
+   return Observable.throw(error.statusText);
+ }
+
 }
+

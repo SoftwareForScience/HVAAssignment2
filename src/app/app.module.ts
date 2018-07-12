@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { APIFetchService } from './apifetch.service';
+import { FormsModule } from '@angular/forms'
+import { HttpModule } from '@angular/http'
 
 import { AppComponent } from './app.component';
 import { ErrorsDetectorsChartComponent } from './charts_components/errors-detectors-chart/errors-detectors-chart.component';
@@ -23,8 +25,11 @@ import {DarkModeHandlerService } from './dark-mode-handler.service'
     SidebarComponent
   ],
   imports: [
+    BrowserModule,
+    FormsModule,
     ChartsModule,
     BrowserModule,
+    HttpModule,
     AppRoutingModule,
     HttpClientModule
   ],
