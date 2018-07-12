@@ -25,7 +25,6 @@ export class ErrorsRunChartComponent implements OnInit {
     this._APIFetch.getPosts().
     subscribe(
       resultArray =>{ this._postsArray = resultArray;
-      console.dir(resultArray);
       for(i=0;i<resultArray.length;i++){    //Fetching subsystems in an array
         this.runArray.push(resultArray[i].run);
       }
@@ -56,7 +55,6 @@ export class ErrorsRunChartComponent implements OnInit {
           delete this.compressedrunArray[i];
         }
       }
-      console.log(this.compressedrunArray);
       this.runArray=[];
       this.countsSubsystem=[];
 
@@ -66,8 +64,6 @@ export class ErrorsRunChartComponent implements OnInit {
       for(i=0;i<this.compressedrunArray.length;i++){
         this.countsSubsystem.push(this.compressedrunArray[i].count);
       }
-      console.log(this.runArray);
-      console.log(this.countsSubsystem);
 
       //Charting
       this.chartRun = new Chart('canvasRun', {

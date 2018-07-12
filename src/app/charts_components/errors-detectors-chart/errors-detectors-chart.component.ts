@@ -26,7 +26,6 @@ export class ErrorsDetectorsChartComponent {
     this._APIFetch.getPosts().
     subscribe(
       resultArray =>{ this._postsArray = resultArray;
-      console.dir(resultArray);
       for(i=0;i<resultArray.length;i++){    //Fetching subsystems in an array
         this.subsystemArray.push(resultArray[i].subsystem);
       }
@@ -57,7 +56,6 @@ export class ErrorsDetectorsChartComponent {
           delete this.compressedsubsytemArray[i];
         }
       }
-      console.log(this.compressedsubsytemArray);
       this.subsystemArray=[];
       this.countsSubsystem=[];
 
@@ -67,8 +65,6 @@ export class ErrorsDetectorsChartComponent {
       for(i=0;i<this.compressedsubsytemArray.length;i++){
         this.countsSubsystem.push(this.compressedsubsytemArray[i].count);
       }
-      console.log(this.subsystemArray);
-      console.log(this.countsSubsystem);
 
       //Charting
       this.chartDetectors = new Chart('canvasDetectors', {
