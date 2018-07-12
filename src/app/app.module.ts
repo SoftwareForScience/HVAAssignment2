@@ -13,7 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsComponent } from './charts/charts.component';
 import { LognumberVisuComponent } from './visual_components/lognumber-visu/lognumber-visu.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import {DarkModeHandlerService } from './dark-mode-handler.service'
+import {DarkModeHandlerService } from './dark-mode-handler.service';
+import { ErrorsRunChartComponent } from './charts_components/errors-run-chart/errors-run-chart.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {DarkModeHandlerService } from './dark-mode-handler.service'
     DashboardComponent,
     ChartsComponent,
     LognumberVisuComponent,
-    SidebarComponent
+    SidebarComponent,
+    ErrorsRunChartComponent
   ],
   imports: [
     BrowserModule,

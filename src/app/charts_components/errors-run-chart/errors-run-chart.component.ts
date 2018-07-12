@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { APIFetchService } from 'src/app/apifetch.service';
 import { Chart } from 'chart.js';
 import { InterfaceAPI } from "src/app/interface-api";
@@ -6,18 +6,17 @@ import { error } from 'util';
 import { ValueTransformer } from '../../../../node_modules/@angular/compiler/src/util';
 
 @Component({
-  selector: 'app-errors-detectors-chart',
-  templateUrl: './errors-detectors-chart.component.html',
-  providers:[APIFetchService]
+  selector: 'app-errors-run-chart',
+  templateUrl: './errors-run-chart.component.html',
+  styleUrls: ['./errors-run-chart.component.scss']
 })
-
-export class ErrorsDetectorsChartComponent {
+export class ErrorsRunChartComponent implements OnInit {
 
   _postsArray: InterfaceAPI[];
-  subsystemArray = [];
+  runArray = [];
   countsSubsystem = [];
-  compressedsubsytemArray = [];
-  chartDetectors = [];
+  compressedrunArray = [];
+  chartRun = [];
 
   constructor(private _APIFetch: APIFetchService) {}
 
@@ -28,16 +27,16 @@ export class ErrorsDetectorsChartComponent {
       resultArray =>{ this._postsArray = resultArray;
       console.dir(resultArray);
       for(i=0;i<resultArray.length;i++){    //Fetching subsystems in an array
-        this.subsystemArray.push(resultArray[i].subsystem);
+        this.runArray.push(resultArray[i].run);
       }
       //Counting logs by subsystem and remove doubles
-      let copy = this.subsystemArray.slice(0);
+      let copy = this.runArray.slice(0);
       // first loop goes over every element
-	    for (var i = 0; i < this.subsystemArray.length; i++) {
+	    for (var i = 0; i < this.runArray.length; i++) {
         let Count = 0;
         // loop over every element in the copy and see if it's the same
 		    for (var w = 0; w < copy.length; w++) {
-			    if (this.subsystemArray[i] == copy[w]) {
+			    if (this.runArray[i] == copy[w]) {
 				  // increase amount of times duplicate is found
 				  Count++;
 				  // sets item to undefined
@@ -46,41 +45,41 @@ export class ErrorsDetectorsChartComponent {
         }
         if (Count > 0) {
           let a = {value:"", count:0};
-          a.value = this.subsystemArray[i];
+          a.value = this.runArray[i];
           a.count = Count;
-          this.compressedsubsytemArray.push(a);
+          this.compressedrunArray.push(a);
         }
       }
-      for(i=0; i < this.compressedsubsytemArray.length;i++)
+      for(i=0; i < this.compressedrunArray.length;i++)
       {
-        if(this.compressedsubsytemArray[i].value == null ){
-          delete this.compressedsubsytemArray[i];
+        if(this.compressedrunArray[i].value == null ){
+          delete this.compressedrunArray[i];
         }
       }
-      console.log(this.compressedsubsytemArray);
-      this.subsystemArray=[];
+      console.log(this.compressedrunArray);
+      this.runArray=[];
       this.countsSubsystem=[];
 
-      for(i=0;i<this.compressedsubsytemArray.length;i++){
-        this.subsystemArray.push(this.compressedsubsytemArray[i].value);
+      for(i=0;i<this.compressedrunArray.length;i++){
+        this.runArray.push(this.compressedrunArray[i].value);
       }
-      for(i=0;i<this.compressedsubsytemArray.length;i++){
-        this.countsSubsystem.push(this.compressedsubsytemArray[i].count);
+      for(i=0;i<this.compressedrunArray.length;i++){
+        this.countsSubsystem.push(this.compressedrunArray[i].count);
       }
-      console.log(this.subsystemArray);
+      console.log(this.runArray);
       console.log(this.countsSubsystem);
 
       //Charting
-      this.chartDetectors = new Chart('canvasDetectors', {
+      this.chartRun = new Chart('canvasRun', {
         type: 'bar',
         data: {
-          labels: this.subsystemArray,
+          labels: this.runArray,
           datasets: [
             { 
               label: "Number of log",
               data: this.countsSubsystem,
-              borderColor: "#68B159",
-              backgroundColor: "#68B159" ,
+              borderColor: "#D46A6A",
+              backgroundColor: "#D46A6A" ,
               fill: true
             }
           ]
@@ -92,7 +91,7 @@ export class ErrorsDetectorsChartComponent {
 					},
 					title: {
 						display: true,
-						text: 'Number of logs by detector chart'
+						text: 'Number of logs by runs chart'
           },
           scales: {
             xAxes: [{
@@ -102,7 +101,7 @@ export class ErrorsDetectorsChartComponent {
               display: true,
               ticks: {
                 beginAtZero: true
-            }
+              }
             }],
           }
         }

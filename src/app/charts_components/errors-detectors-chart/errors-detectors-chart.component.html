@@ -1,35 +1,5 @@
 <div class="errors_detectors_container">
-      <div *ngIf="chart">
-            <canvas id="canvas">{{ chart }}</canvas>
+      <div *ngIf="chartDetectors">
+            <canvas id="canvasDetectors">{{ chartDetectors }}</canvas>
       </div>
 </div>
-<div class="container">
-      <div class="row">
-         <table class="table">
-            <thead>
-             <tr>
-               <th class="text-center">Created</th>
-               <th class="text-center">Subsystem</th>
-               <th class="text-center">Class</th>
-               <th class="text-center">Type</th>
-               <th class="text-center">Run</th>
-               <th class="text-center">Author</th>
-               <th class="text-center">Title</th>
-               <th class="text-center">LogEntry</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr *ngFor="let post of _postsArray">
-                 <td class="text-center" style="width: 15px">{{post.created}}</td>
-                 <td class="text-center" style="width: 15px">{{post.subsystem}}</td>
-                 <td class="text-center" style="width: 15px">{{post.class}}</td>
-                 <td class="text-center" style="width: 15px">{{post.type}}</td>
-                 <td class="text-center" style="width: 15px">{{post.run}}</td>
-                 <td class="text-center" style="width: 15px">{{post.author}}</td>
-                 <td class="text-center" style="width: 15px">{{post.title}}</td>
-                 <td class="text-center">{{post.log_entry_text}}</td>
-             </tr>
-           </tbody>
-         </table>
-      </div>
-   </div>
