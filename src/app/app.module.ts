@@ -14,7 +14,8 @@ import { ChartsComponent } from './charts/charts.component';
 import { LognumberVisuComponent } from './visual_components/lognumber-visu/lognumber-visu.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {DarkModeHandlerService } from './dark-mode-handler.service';
-import { ErrorsRunChartComponent } from './charts_components/errors-run-chart/errors-run-chart.component'
+import { ErrorsRunChartComponent } from './charts_components/errors-run-chart/errors-run-chart.component';
+import { AuthorVisuComponent } from './visual_components/author-visu/author-visu.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ErrorsRunChartComponent } from './charts_components/errors-run-chart/er
     ChartsComponent,
     LognumberVisuComponent,
     SidebarComponent,
-    ErrorsRunChartComponent
+    ErrorsRunChartComponent,
+    AuthorVisuComponent
   ],
   imports: [
     BrowserModule,

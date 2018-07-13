@@ -13,6 +13,7 @@ export class LognumberVisuComponent implements OnInit {
 
   _postsArray: InterfaceAPI[];
   logCounts = 0;
+  lastDate = new Date();
 
   constructor(private _APIFetch: APIFetchService) {}
 
@@ -23,6 +24,12 @@ export class LognumberVisuComponent implements OnInit {
       resultArray =>{ this._postsArray = resultArray;
       //Counting logs by subsystem and remove doubles
       this.logCounts = resultArray.length;
+      for(i=0; i < this.logCounts; i++){
+        if(this.lastDate <= resultArray[i].created){
+          this.lastDate = resultArray[i].created;
+        }
+      }
+      
       }
        ,
       error => console.log("Error :: " + error )
