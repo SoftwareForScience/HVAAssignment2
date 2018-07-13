@@ -9,7 +9,7 @@ import {InterfaceAPI} from "./interface-api";
 @Injectable()
 export class APIFetchService {
 
-  private postsURL ="http://100.72.40.171:8081/api/all/entries";
+  private postsURL ="http://172.20.10.8:8081/api/all/entries";
 
   constructor(private http: Http ) {}
   getPosts(): Observable<InterfaceAPI[]>{
